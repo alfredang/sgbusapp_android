@@ -1,0 +1,10 @@
+.gradle/
+.idea/
+build/
+app/build/
+local.properties
+keystore.properties
+upload-keystore.jks
+*.iml
+.env
+.playwright-mcp/

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B6E4F"/>
+      <stop offset="1" stop-color="#08543C"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="500" fill="url(#bg)"/>
+  <g transform="translate(110,140) scale(2.05)">
+    <path fill="#FFFFFF" d="M27,34C27,27.9 31.9,23 38,23H70C76.1,23 81,27.9 81,34V68C81,73.5 77,78.1 71.8,78.9L75,86H67L63.8,79H44.2L41,86H33L36.2,78.9C31,78.1 27,73.5 27,68V34ZM37,34V49H71V34C71,33.4 70.6,33 70,33H38C37.4,33 37,33.4 37,34ZM37,59V68C37,68.6 37.4,69 38,69H70C70.6,69 71,68.6 71,68V59H37Z"/>
+    <path fill="#0B6E4F" d="M41,39H67V45H41V39ZM41,62A4,4 0,1 0,41 70A4,4 0,0 0,41 62ZM67,62A4,4 0,1 0,67 70A4,4 0,0 0,67 62Z"/>
+  </g>
+  <text x="440" y="235" font-family="Roboto, Arial, sans-serif" font-size="96" font-weight="700" fill="#FFFFFF">SG Bus</text>
+  <text x="442" y="300" font-family="Roboto, Arial, sans-serif" font-size="40" font-weight="400" fill="#CDEFE0">Live Singapore bus arrivals</text>
+</svg>
