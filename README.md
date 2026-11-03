@@ -1,6 +1,6 @@
-# SG Bus Android
+# Bus Arrival Times (Android)
 
-Native Android version of SG Bus, mirroring the SwiftUI app at `alfredang/sgbusapp`.
+Native Android version of Bus Arrival Times (formerly SG Bus), mirroring the SwiftUI app at `alfredang/sgbusapp`.
 
 ## Features
 

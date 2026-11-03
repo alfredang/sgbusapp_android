@@ -21,10 +21,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -36,11 +41,22 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -72,10 +88,22 @@ private fun SGBusTheme(content: @Composable () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 private fun SGBusApp(viewModel: BusArrivalsViewModel = viewModel()) {
     val state by viewModel.uiState.collectAsState()
+    var showAbout by rememberSaveable { mutableStateOf(false) }
+
+    if (showAbout) {
+        AboutDialog(onDismiss = { showAbout = false })
+    }
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("SG Bus") })
+            TopAppBar(
+                title = { Text(stringResource(R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = { showAbout = true }) {
+                        Icon(Icons.Outlined.Info, contentDescription = "About")
+                    }
+                },
+            )
         },
     ) { paddingValues ->
         LazyColumn(
@@ -123,8 +151,76 @@ private fun SGBusApp(viewModel: BusArrivalsViewModel = viewModel()) {
             items(state.services, key = { it.serviceNo }) { service ->
                 ServiceArrivalRow(service = service)
             }
+
+            item {
+                DataAttribution(
+                    modifier = Modifier.padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 24.dp),
+                )
+            }
         }
     }
+}
+
+private const val DATAMALL_URL = "https://datamall.lta.gov.sg"
+private const val INDEPENDENCE_DISCLAIMER =
+    "Independent app. Not affiliated with, endorsed by, or operated by LTA, SBS Transit, SMRT, " +
+        "Tower Transit or Go-Ahead."
+
+/** Data-source credit and independence notice, shown under the arrivals and in About. */
+@Composable
+private fun DataAttribution(modifier: Modifier = Modifier) {
+    val uriHandler = LocalUriHandler.current
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(
+            text = buildAnnotatedString {
+                append("Bus arrival data: ")
+                withLink(
+                    LinkAnnotation.Url(
+                        url = DATAMALL_URL,
+                        styles = TextLinkStyles(
+                            SpanStyle(
+                                color = MaterialTheme.colorScheme.primary,
+                                textDecoration = TextDecoration.Underline,
+                            ),
+                        ),
+                        linkInteractionListener = { uriHandler.openUri(DATAMALL_URL) },
+                    ),
+                ) {
+                    append("LTA DataMall")
+                }
+            },
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Text(
+            text = INDEPENDENCE_DISCLAIMER,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+@Composable
+private fun AboutDialog(onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.app_name)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text("Version ${BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.bodySmall)
+                Text("Check live arrival times for Singapore bus stops.")
+                DataAttribution()
+                Text(
+                    "Arrival times are estimates and may differ from actual bus arrivals.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text("Developer: Tertiary Infotech Academy Pte Ltd", style = MaterialTheme.typography.bodySmall)
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("Close") }
+        },
+    )
 }
 
 @Composable
@@ -201,7 +297,10 @@ private fun ArrivalStatus(state: BusArrivalsUiState) {
             }
         }
         state.errorMessage != null -> EmptyMessage(state.errorMessage)
-        state.services.isEmpty() -> EmptyMessage("No arrivals listed")
+        state.services.isEmpty() -> EmptyMessage(
+            "No buses are expected at this stop right now. Most services run from about " +
+                "5:30am to midnight — tap Refresh arrivals to check again.",
+        )
     }
 }
 

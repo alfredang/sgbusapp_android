@@ -1,0 +1,33 @@
+APP NAME (17/30)
+Bus Arrival Times
+
+SHORT DESCRIPTION (≤80)
+Live arrival times for Singapore bus stops, with seat availability.
+
+FULL DESCRIPTION
+Bus Arrival Times shows when the next buses will reach your stop, so you can head out at the right time.
+
+Features
+• Live arrival estimates for the next three buses on every service at a stop
+• Seat availability for each bus: seats available, standing, or limited standing
+• Bus type: single-deck, double-deck or bendy
+• Search stops by stop code, road name or landmark
+• One-tap refresh
+• No account, no sign-in, no ads
+
+Data source
+Bus arrival data comes from LTA DataMall (https://datamall.lta.gov.sg), the Land Transport Authority's open data service. Arrival times are estimates and may differ from actual bus arrivals.
+
+Independent app
+Bus Arrival Times is an independent app developed by Tertiary Infotech Academy Pte Ltd. It is not affiliated with, endorsed by, or operated by the Land Transport Authority (LTA), SBS Transit, SMRT, Tower Transit or Go-Ahead.
+
+Privacy policy: https://www.tertiaryinfotech.com/privacy
+
+RELEASE NOTES (en-US) — 1.1
+• Renamed to Bus Arrival Times
+• Added LTA DataMall data-source credit and an About screen
+• Clearer message when no buses are expected at a stop
+
+STORE GRAPHICS
+Feature graphic updated: play-assets/feature-1024x500.png ("Bus Arrival Times"). Icon unchanged (generic bus glyph, no operator logos).
+Phone screenshots retaken 2026-11-04 (1080x2160): play-assets/screens/s1.png (stop list), s2.png (About + LTA attribution). Night-time capture, so no live arrivals visible — optionally retake s1 in the daytime.

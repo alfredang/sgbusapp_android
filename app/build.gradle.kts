@@ -28,11 +28,11 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.alfredang.sgbus"
+        applicationId = "com.tertiaryinfotech.sgbusapp"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         val ltaAccountKey = localProperties.getProperty("ltaAccountKey", "")
         buildConfigField("String", "LTA_ACCOUNT_KEY", ltaAccountKey.asBuildConfigString())
@@ -52,7 +52,9 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
     }
