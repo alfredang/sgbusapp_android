@@ -8,3 +8,12 @@ upload-keystore.jks
 *.iml
 .env
 .playwright-mcp/
+
+# Secrets, archives and source material — never pushed
+*.jks
+*.keystore
+.kotlin/
+# Distribution archives (rebuildable — never pushed to GitHub)
+*.zip
+# Source material the project was derived from — not ours to republish.
+**/reference/
